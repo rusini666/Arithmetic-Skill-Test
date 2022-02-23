@@ -5,4 +5,9 @@
     <string name="message">TextView</string>
     <string name="student_name">Student Name: Rusini thara Gunarathne</string>
     <string name="student_id">Student ID: 20200205</string>
+    <string name="greater_btn">Greater</string>
+    <string name="less_btn">Less</string>
+    <string name="equals_btn">==</string>
+    <string name="right_exp">right</string>
+    <string name="left_exp">left</string>
 </resources>
