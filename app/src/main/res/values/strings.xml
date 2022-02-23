@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Arithmetic Skill Test</string>
+    <string name="new_game">New Game</string>
+    <string name="about">About</string>
+    <string name="message">TextView</string>
+    <string name="student_name">Student Name: Rusini thara Gunarathne</string>
+    <string name="student_id">Student ID: 20200205</string>
+</resources>
