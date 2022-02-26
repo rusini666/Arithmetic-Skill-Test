@@ -10,4 +10,12 @@
     <string name="equals_btn">==</string>
     <string name="right_exp">right</string>
     <string name="left_exp">left</string>
+    <string name="correct_guesses">Correct Guesses:</string>
+    <string name="final_results">Final Results</string>
+    <string name="game_over">Game Over</string>
+    <string name="display_correct_guesses" />
+    <string name="wrong_guesses">Wrong Guesses:</string>
+    <string name="display_wrong_guesses" />
+    <string name="timer">50</string>
+    <string name="result">TextView</string>
 </resources>
