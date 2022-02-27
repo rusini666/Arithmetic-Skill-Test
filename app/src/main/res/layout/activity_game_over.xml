@@ -15,7 +15,7 @@
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
+        app:layout_constraintBaseline_toBaselineOf="@+id/correctScore"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -28,24 +28,24 @@
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView6"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
+        app:layout_constraintBaseline_toBaselineOf="@+id/wrongScore"
+        app:layout_constraintEnd_toStartOf="@+id/wrongScore"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/wrongScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
         android:text="@string/display_wrong_guesses"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintEnd_toEndOf="@+id/correctScore"
+        app:layout_constraintStart_toStartOf="@+id/correctScore"
+        app:layout_constraintTop_toBottomOf="@+id/correctScore" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/correctScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"

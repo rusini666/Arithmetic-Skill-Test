@@ -10,8 +10,8 @@ import androidx.core.content.ContextCompat
 import kotlin.random.Random
 
 class GamePage : AppCompatActivity() {
-    val correctCount = 0
-    val wrongCount = 0
+    var correctCount = 0
+    var wrongCount = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_page)
@@ -24,10 +24,9 @@ class GamePage : AppCompatActivity() {
         val resultDisplay = findViewById<TextView>(R.id.resultDisplay)
         val timer = findViewById<TextView>(R.id.timer)
 
-
-
         val finish = Intent(this, GameOver::class.java)
         object : CountDownTimer(50000, 1000) {
+
 
             override fun onTick(millisUntilFinished: Long) {
                 timer.text = "Seconds remaining: " + millisUntilFinished / 1000
@@ -54,10 +53,12 @@ class GamePage : AppCompatActivity() {
                 if(answer(left) > answer(right)) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
+                    correctCount++
                     mainFunc()
                 }else {
                     resultDisplay.text = "WRONG!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.red))
+                    wrongCount++
                     mainFunc()
                 }
             }
@@ -65,10 +66,12 @@ class GamePage : AppCompatActivity() {
                 if(answer(left) == answer(right)) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
+                    correctCount++
                     mainFunc()
                 }else {
                     resultDisplay.text = "WRONG!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.red))
+                    wrongCount++
                     mainFunc()
                 }
             }
@@ -76,16 +79,17 @@ class GamePage : AppCompatActivity() {
                 if(answer(left) < answer(right)) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
+                    correctCount++
                     mainFunc()
                 }else {
                     resultDisplay.text = "WRONG!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.red))
+                    wrongCount++
                     mainFunc()
                 }
             }
         }
         mainFunc()
-
     }
 
     private val operators = listOf("+", "-", "/", "*")
