@@ -41,16 +41,16 @@ class GamePage : AppCompatActivity() {
 
 
         fun mainFunc(){
-//            resultDisplay.text = ""
+            val f1 = Functions()
 
+            val left = f1.randomExpression()
+            val right = f1.randomExpression()
 
-            val left = randomExpression()
-            val right = randomExpression()
-            leftExp.text = left
-            rightExp.text = right
+            val leftStringExp = left.joinToString(separator = "")
+            val rightStringExp = right.joinToString(separator = "")
 
             greaterBtn.setOnClickListener {
-                if(answer(left) > answer(right)) {
+                if(f1.answer(leftStringExp) > f1.answer(rightStringExp)) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
@@ -63,7 +63,7 @@ class GamePage : AppCompatActivity() {
                 }
             }
             equalsBtn.setOnClickListener {
-                if(answer(left) == answer(right)) {
+                if(f1.answer(leftStringExp) == f1.answer(rightStringExp)) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
@@ -76,7 +76,7 @@ class GamePage : AppCompatActivity() {
                 }
             }
             lessBtn.setOnClickListener {
-                if(answer(left) < answer(right)) {
+                if(f1.answer(leftStringExp) < f1.answer(rightStringExp)) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
@@ -88,52 +88,10 @@ class GamePage : AppCompatActivity() {
                     mainFunc()
                 }
             }
+            leftExp.text = f1.getFormattedExpression(left)
+            rightExp.text = f1.getFormattedExpression(right)
         }
         mainFunc()
-    }
-
-    private val operators = listOf("+", "-", "/", "*")
-
-    private fun randomNumber(): Int = Random.nextInt(1, 20)
-
-    private fun randomExpression(): String {
-        val numberOfExps = Random.nextInt(1, 4)
-        val arithmeticExp = mutableListOf("${randomNumber()}")
-
-        repeat(numberOfExps) {
-            arithmeticExp.add(operators.random())
-            arithmeticExp.add("${randomNumber()}")
-        }
-
-        return arithmeticExp.joinToString(separator = "")
-    }
-
-    private fun answer(arithmeticExp: String): Int {
-        var num: String = ""
-        var symbol: Char = '+'
-        var finalAns: Int = 0
-
-        for(i in arithmeticExp) {
-            if (i in '0'..'9')
-                num += i
-            else {
-                when(symbol){
-                    '+' -> finalAns += Integer.parseInt(num)
-                    '-' -> finalAns -= Integer.parseInt(num)
-                    '*' -> finalAns *= Integer.parseInt(num)
-                    '/' -> finalAns /= Integer.parseInt(num)
-                }
-                num = ""
-                symbol = i
-            }
-        }
-        when(symbol){
-            '+' -> finalAns += Integer.parseInt(num)
-            '-' -> finalAns -= Integer.parseInt(num)
-            '*' -> finalAns *= Integer.parseInt(num)
-            '/' -> finalAns /= Integer.parseInt(num)
-        }
-        return finalAns
     }
 
 }
