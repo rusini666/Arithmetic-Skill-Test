@@ -7,11 +7,11 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import kotlin.random.Random
 
 class GamePage : AppCompatActivity() {
     var correctCount = 0
     var wrongCount = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_page)
@@ -22,12 +22,13 @@ class GamePage : AppCompatActivity() {
         val leftExp = findViewById<TextView>(R.id.leftExp)
         val rightExp = findViewById<TextView>(R.id.rightExp)
         val resultDisplay = findViewById<TextView>(R.id.resultDisplay)
-        val timer = findViewById<TextView>(R.id.timer)
-
+        val timer: TextView = findViewById(R.id.timer)
         val finish = Intent(this, GameOver::class.java)
+
+
+        //var timeCount : Long = 50000
+
         object : CountDownTimer(50000, 1000) {
-
-
             override fun onTick(millisUntilFinished: Long) {
                 timer.text = "Seconds remaining: " + millisUntilFinished / 1000
             }
