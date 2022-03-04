@@ -7,29 +7,39 @@ class Functions {
     fun randomExpression(): ArrayList<String>{
         val operators = listOf("+", "-", "/", "*")
         fun randomNumber(): Int = Random.nextInt(1, 20)
-        val numberOfExps = (1..4).random()
+        val numberOfTerms = (2..4).random()
         val arithmeticExp = arrayListOf("${randomNumber()}")
         var currentValue = arithmeticExp[0].toInt()
 
-        for(i in 1 until numberOfExps){
+        for(i in 1 until numberOfTerms){
 
             val opt = operators.random()
             var rightOperand = randomNumber()
 
-            if(opt=="*" || opt=="+") {
+            if(opt=="*" || opt=="+"){
 
-                var p = when (opt) {
-                    "*" -> currentValue * rightOperand
-                    else -> currentValue + rightOperand
+                var p = when(opt){
+                    "*"->currentValue * rightOperand
+                    else->currentValue + rightOperand
                 }
 
-                while (p > 100) {
+                while(p>100){
                     rightOperand = randomNumber()
-                    p = when (opt) {
-                        "*" -> currentValue * rightOperand
-                        else -> currentValue + rightOperand
+                    p = when(opt){
+                        "*"->currentValue * rightOperand
+                        else->currentValue + rightOperand
                     }
                 }
+            }else if(opt=="/" && currentValue % rightOperand != 0){
+                val factors = mutableListOf(1, currentValue)
+
+                for(f in 2 until currentValue){
+                    if(currentValue % f == 0){
+                        factors.add(f)
+                    }
+                }
+
+                rightOperand = factors.random()
             }
             currentValue = when(opt){
                 "*" -> currentValue * rightOperand
@@ -93,5 +103,4 @@ class Functions {
             return arithmeticExp.joinToString(separator = "")
         }
     }
-
 }
