@@ -1,16 +1,11 @@
 package com.example.arithmeticskilltest
 
-import android.app.ActionBar
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Slide
-import android.transition.TransitionManager
-import android.view.*
-import android.widget.*
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,64 +23,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         aboutBtn.setOnClickListener {
-            // Initialize a new layout inflater instance
-//            val inflater:LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//
-//            // Inflate a custom view using layout inflater
-//            val view = inflater.inflate(R.layout.about_window,null)
-//
-//            // Initialize a new instance of popup window
-//            val popupWindow = PopupWindow(
-//                view, // Custom view to show in popup window
-//                LinearLayout.LayoutParams.WRAP_CONTENT, // Width of popup window
-//                LinearLayout.LayoutParams.WRAP_CONTENT // Window height
-//            )
-//
-//
-//            // If API level 23 or higher then execute the code
-//            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-//                // Create a new slide animation for popup window enter transition
-//                val slideIn = Slide()
-//                slideIn.slideEdge = Gravity.TOP
-//                popupWindow.enterTransition = slideIn
-//
-//                // Slide animation for popup window exit transition
-//                val slideOut = Slide()
-//                slideOut.slideEdge = Gravity.RIGHT
-//                popupWindow.exitTransition = slideOut
-//
-//            }
+            AlertDialog.Builder(this) //set icon
+                .setIcon(android.R.drawable.ic_dialog_alert) //set title
+                .setTitle("Student Details") //set message
+                .setMessage("Student Name: Rusini Thara Gunarathne\n\n" +
+                        "Student ID: 20200205\n\n" +
+                        "I confirm that I understand what plagiarism is and have read and understood the section on Assessment Offences in the Essential Information for Students. The work that I have submitted is entirely my own. Any work from other authors is duly referenced and acknowledged.") //set positive button
+                .setPositiveButton("OK") { dialogInterface, i -> //set what would happen when positive button is clicked
+                    dialogInterface.cancel()
+                }
+                .show()
 
-//            // Get the widgets reference from custom view
-//            val tv = view.findViewById<TextView>(R.id.text_view)
-//            val buttonPopup = view.findViewById<Button>(R.id.button_popup)
-//
-//            // Set click listener for popup window's text view
-//            tv.setOnClickListener{
-//                // Change the text color of popup window's text view
-//                tv.setTextColor(Color.RED)
-//            }
-//
-//            // Set a click listener for popup's button widget
-//            buttonPopup.setOnClickListener{
-//                // Dismiss the popup window
-//                popupWindow.dismiss()
-//            }
-
-//            // Set a dismiss listener for popup window
-//            popupWindow.setOnDismissListener {
-//                Toast.makeText(applicationContext,"Popup closed", Toast.LENGTH_SHORT).show()
-//            }
-//
-//
-//            // Finally, show the popup window on app
-//            TransitionManager.beginDelayedTransition(view as ViewGroup?)
-//            popupWindow.showAtLocation(
-//                view, // Location to display popup window
-//                Gravity.CENTER, // Exact position of layout to display popup
-//                0, // X offset
-//                0 // Y offset
-//            )
         }
 
     }
