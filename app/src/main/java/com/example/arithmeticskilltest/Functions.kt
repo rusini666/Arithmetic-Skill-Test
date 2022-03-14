@@ -5,7 +5,7 @@ import kotlin.random.Random
 class Functions {
 
     fun randomExpression(): ArrayList<String>{
-        val operators = listOf("+", "-", "/", "*")
+        val operators = listOf("+", "-", "/", "*") // list of operators
         fun randomNumber(): Int = Random.nextInt(1, 20)
         val numberOfTerms = (2..4).random()
         val arithmeticExp = arrayListOf("${randomNumber()}")
@@ -13,7 +13,7 @@ class Functions {
 
         for(i in 1 until numberOfTerms){
 
-            val opt = operators.random()
+            val opt = operators.random() // generating random operators
             var rightOperand = randomNumber()
 
             if(opt=="*" || opt=="+"){
@@ -33,9 +33,9 @@ class Functions {
             }else if(opt=="/" && currentValue % rightOperand != 0){
                 val factors = mutableListOf(1, currentValue)
 
-                for(f in 2 until currentValue){
-                    if(currentValue % f == 0){
-                        factors.add(f)
+                for(k in 2 until currentValue){
+                    if(currentValue % k == 0){
+                        factors.add(k)
                     }
                 }
 
@@ -103,4 +103,6 @@ class Functions {
             return arithmeticExp.joinToString(separator = "")
         }
     }
+
+
 }

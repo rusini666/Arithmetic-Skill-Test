@@ -11,37 +11,47 @@ import androidx.core.content.ContextCompat
 class GamePage : AppCompatActivity() {
     var correctCount = 0
     var wrongCount = 0
+    var currentTime : Long = 0
+    lateinit var count_down_timer : CountDownTimer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_page)
-
-        val greaterBtn =  findViewById<Button>(R.id.greaterBtn)
-        val equalsBtn =  findViewById<Button>(R.id.equalsBtn)
+        val timer: TextView = findViewById(R.id.timer)
+        val greaterBtn = findViewById<Button>(R.id.greaterBtn)
+        val equalsBtn = findViewById<Button>(R.id.equalsBtn)
         val lessBtn = findViewById<Button>(R.id.lessBtn)
         val leftExp = findViewById<TextView>(R.id.leftExp)
         val rightExp = findViewById<TextView>(R.id.rightExp)
         val resultDisplay = findViewById<TextView>(R.id.resultDisplay)
-        val timer: TextView = findViewById(R.id.timer)
         val finish = Intent(this, GameOver::class.java)
 
 
-        //var timeCount : Long = 50000
+        fun timerFunc(millisec: Long){
+            count_down_timer = object: CountDownTimer(50000, 1000){
+                override fun onTick(millisUntilFinished: Long) {
+                    currentTime = millisUntilFinished
+                    timer.text = "" + currentTime / 1000
+                }
 
-        object : CountDownTimer(50000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                timer.text = "Seconds remaining: " + millisUntilFinished / 1000
+                override fun onFinish() {
+                    finish.putExtra("correct", correctCount.toString())
+                    finish.putExtra("wrong", wrongCount.toString())
+                    startActivity(finish)
+                }
+            }.start()
+        }
+
+        fun bonusTime() {
+            if(correctCount % 5 == 0 && correctCount != 0) {
+                count_down_timer.cancel()
+                timerFunc(currentTime+5000)
             }
+        }
 
-            override fun onFinish() {
-                finish.putExtra("correct", correctCount.toString())
-                finish.putExtra("wrong", wrongCount.toString())
-                startActivity(finish)
-            }
-        }.start()
+        timerFunc(50000)
 
-
-        fun mainFunc(){
+        fun mainFunc() {
             val f1 = Functions()
 
             val left = f1.randomExpression()
@@ -50,13 +60,15 @@ class GamePage : AppCompatActivity() {
             val leftStringExp = left.joinToString(separator = "")
             val rightStringExp = right.joinToString(separator = "")
 
+            bonusTime()
+
             greaterBtn.setOnClickListener {
-                if(f1.answer(leftStringExp) > f1.answer(rightStringExp)) {
+                if (f1.answer(leftStringExp) > f1.answer(rightStringExp)) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
                     mainFunc()
-                }else {
+                } else {
                     resultDisplay.text = "WRONG!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.red))
                     wrongCount++
@@ -64,12 +76,12 @@ class GamePage : AppCompatActivity() {
                 }
             }
             equalsBtn.setOnClickListener {
-                if(f1.answer(leftStringExp) == f1.answer(rightStringExp)) {
+                if (f1.answer(leftStringExp) == f1.answer(rightStringExp)) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
                     mainFunc()
-                }else {
+                } else {
                     resultDisplay.text = "WRONG!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.red))
                     wrongCount++
@@ -77,12 +89,12 @@ class GamePage : AppCompatActivity() {
                 }
             }
             lessBtn.setOnClickListener {
-                if(f1.answer(leftStringExp) < f1.answer(rightStringExp)) {
+                if (f1.answer(leftStringExp) < f1.answer(rightStringExp)) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
                     mainFunc()
-                }else {
+                } else {
                     resultDisplay.text = "WRONG!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.red))
                     wrongCount++
@@ -93,6 +105,7 @@ class GamePage : AppCompatActivity() {
             rightExp.text = f1.getFormattedExpression(right)
         }
         mainFunc()
+
     }
 
 }
