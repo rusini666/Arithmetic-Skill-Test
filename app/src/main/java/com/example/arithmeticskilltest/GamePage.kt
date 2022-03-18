@@ -27,8 +27,8 @@ class GamePage : AppCompatActivity() {
         val finish = Intent(this, GameOver::class.java)
 
 
-        fun timerFunc(millisec: Long){
-            count_down_timer = object: CountDownTimer(50000, 1000){
+        fun timerFunc(milliseconds: Long){
+            count_down_timer = object: CountDownTimer(milliseconds, 1000){
                 override fun onTick(millisUntilFinished: Long) {
                     currentTime = millisUntilFinished
                     timer.text = "" + currentTime / 1000
@@ -42,17 +42,22 @@ class GamePage : AppCompatActivity() {
             }.start()
         }
 
+        /**
+         *
+         * This function adds bonus time by cancelling the running countdowntimer.
+         *
+         */
         fun bonusTime() {
             if(correctCount % 5 == 0 && correctCount != 0) {
                 count_down_timer.cancel()
-                timerFunc(currentTime+5000)
+                timerFunc(currentTime+10000)
             }
         }
 
         timerFunc(50000)
 
         fun mainFunc() {
-            val f1 = Functions()
+            val f1 = Functions() // create an instance of functions
 
             val left = f1.randomExpression()
             val right = f1.randomExpression()
@@ -75,6 +80,7 @@ class GamePage : AppCompatActivity() {
                     mainFunc()
                 }
             }
+
             equalsBtn.setOnClickListener {
                 if (f1.answer(leftStringExp) == f1.answer(rightStringExp)) {
                     resultDisplay.text = "CORRECT!"
@@ -88,6 +94,7 @@ class GamePage : AppCompatActivity() {
                     mainFunc()
                 }
             }
+
             lessBtn.setOnClickListener {
                 if (f1.answer(leftStringExp) < f1.answer(rightStringExp)) {
                     resultDisplay.text = "CORRECT!"
@@ -105,7 +112,6 @@ class GamePage : AppCompatActivity() {
             rightExp.text = f1.getFormattedExpression(right)
         }
         mainFunc()
-
     }
 
 }

@@ -2,13 +2,23 @@ package com.example.arithmeticskilltest
 
 import kotlin.random.Random
 
+/**
+ *
+ * This class is used to keep functions with majority of the program logic.
+ *
+ */
 class Functions {
 
+    /**
+     *
+     * This function generates random mathematical expressions according to the spec.
+     *
+     */
     fun randomExpression(): ArrayList<String>{
         val operators = listOf("+", "-", "/", "*") // list of operators
-        fun randomNumber(): Int = Random.nextInt(1, 20)
-        val numberOfTerms = (2..4).random()
-        val arithmeticExp = arrayListOf("${randomNumber()}")
+        fun randomNumber(): Int = Random.nextInt(1, 20) // range of the terms
+        val numberOfTerms = (1..4).random() // min. and max. number of terms
+        val arithmeticExp = arrayListOf("${randomNumber()}") // random expression stored as strings in an ArrayList
         var currentValue = arithmeticExp[0].toInt()
 
         for(i in 1 until numberOfTerms){
@@ -19,8 +29,8 @@ class Functions {
             if(opt=="*" || opt=="+"){
 
                 var p = when(opt){
-                    "*"->currentValue * rightOperand
-                    else->currentValue + rightOperand
+                    "*" -> currentValue * rightOperand
+                    else -> currentValue + rightOperand
                 }
 
                 while(p>100){
@@ -50,9 +60,14 @@ class Functions {
             arithmeticExp.add(opt)
             arithmeticExp.add(rightOperand.toString())
         }
-        return arithmeticExp
+        return arithmeticExp // returns an ArrayList with the expression
     }
 
+    /**
+     *
+     * This function accepts the and evaluates the expression left to right.
+     *
+     */
     fun answer(arithmeticExp: String): Int {
         var num = ""
         var symbol = '+'
@@ -81,6 +96,11 @@ class Functions {
         return finalAns
     }
 
+    /**
+     *
+     * This function accepts the and formats the expression to have brackets.
+     *
+     */
     fun getFormattedExpression(arithmeticExp: MutableList<String>): String{
 
         if(arithmeticExp.size>3){
@@ -103,6 +123,4 @@ class Functions {
             return arithmeticExp.joinToString(separator = "")
         }
     }
-
-
 }
