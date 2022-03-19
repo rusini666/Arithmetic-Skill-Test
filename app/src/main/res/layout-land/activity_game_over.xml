@@ -4,28 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/home"
+    android:background="@drawable/math_land"
     tools:context=".GameOver">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:layout_marginTop="37dp"
         android:text="@string/correct_guesses"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/correctScore"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/correctScore" />
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="214dp"
+        android:layout_marginStart="170dp"
+        android:layout_marginBottom="54dp"
         android:text="@string/wrong_guesses"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -37,58 +36,55 @@
         android:id="@+id/wrongScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginBottom="54dp"
         android:text="@string/display_wrong_guesses"
         android:textColor="#000000"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/correctScore"
-        app:layout_constraintTop_toBottomOf="@+id/correctScore" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/correctScore"
+        app:layout_constraintStart_toStartOf="@+id/correctScore" />
 
     <TextView
         android:id="@+id/correctScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="22dp"
         android:text="@string/display_correct_guesses"
         android:textColor="#000000"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/wrongScore"
         app:layout_constraintStart_toEndOf="@+id/textView7" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="170dp"
         android:layout_height="34dp"
-        android:layout_marginTop="79dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="75dp"
         android:gravity="center"
         android:text="@string/final_results"
         android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/correctScore"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toTopOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="0dp"
         android:layout_height="62dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="113dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="115dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="175dp"
         android:text="@string/game_over"
         android:textAllCaps="true"
         android:textColor="#B51B1B"
         android:textSize="48sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
