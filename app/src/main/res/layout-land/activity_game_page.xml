@@ -31,10 +31,11 @@
         android:id="@+id/equalsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="28dp"
         android:text="@string/equals_btn"
         app:layout_constraintBottom_toTopOf="@+id/resultDisplay"
         app:layout_constraintEnd_toStartOf="@+id/resultDisplay"
+        app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="@+id/resultDisplay" />
 
     <TextView

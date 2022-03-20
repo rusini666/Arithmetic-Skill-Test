@@ -23,24 +23,24 @@ class Functions {
 
         for(i in 1 until numberOfTerms){
 
-            val opt = operators.random() // generating random operators
+            val randomOperator = operators.random() // generating random operators
             var rightOperand = randomNumber()
 
-            if(opt=="*" || opt=="+"){
+            if(randomOperator=="*" || randomOperator=="+"){
 
-                var p = when(opt){
+                var p = when(randomOperator){
                     "*" -> currentValue * rightOperand
                     else -> currentValue + rightOperand
                 }
 
                 while(p>100){
                     rightOperand = randomNumber()
-                    p = when(opt){
+                    p = when(randomOperator){
                         "*"->currentValue * rightOperand
                         else->currentValue + rightOperand
                     }
                 }
-            }else if(opt=="/" && currentValue % rightOperand != 0){
+            }else if(randomOperator=="/" && currentValue % rightOperand != 0){
                 val factors = mutableListOf(1, currentValue)
 
                 for(k in 2 until currentValue){
@@ -51,13 +51,13 @@ class Functions {
 
                 rightOperand = factors.random()
             }
-            currentValue = when(opt){
+            currentValue = when(randomOperator){
                 "*" -> currentValue * rightOperand
                 "+" -> currentValue + rightOperand
                 "-" -> currentValue - rightOperand
                 else -> currentValue / rightOperand
             }
-            arithmeticExp.add(opt)
+            arithmeticExp.add(randomOperator)
             arithmeticExp.add(rightOperand.toString())
         }
         return arithmeticExp // returns an ArrayList with the expression
@@ -65,7 +65,8 @@ class Functions {
 
     /**
      *
-     * This function accepts the and evaluates the expression left to right.
+     * This function accepts the String arithmetic expression,
+     * evaluates the expression from left to right and returns the answers.
      *
      */
     fun answer(arithmeticExp: String): Int {

@@ -3,7 +3,6 @@ package com.example.arithmeticskilltest
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +19,8 @@ class GamePage : AppCompatActivity() {
     private lateinit var rightExp : TextView
     lateinit var timer : TextView
     lateinit var finish : Intent
+    var correctTimerScore = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +33,7 @@ class GamePage : AppCompatActivity() {
         leftExp = findViewById(R.id.leftExp)
         rightExp = findViewById(R.id.rightExp)
         val resultDisplay = findViewById<TextView>(R.id.resultDisplay)
-        finish = Intent(this, GameOver::class.java)
+        finish = Intent(this, GameOver::class.java) // intent starting a new activity
 
 
         /**
@@ -41,7 +42,8 @@ class GamePage : AppCompatActivity() {
          *
          */
         fun bonusTime() {
-            if (correctCount % 5 == 0 && correctCount != 0) {
+            if (correctTimerScore % 5 == 0 && correctTimerScore != 0) {
+                correctTimerScore = 0
                 count_down_timer.cancel()
                 timerFunc(currentTime + 10000)
             }
@@ -49,6 +51,12 @@ class GamePage : AppCompatActivity() {
 
         timerFunc(50000)
 
+        /**
+         *
+         * This function gets called whenever onCreate() is called and
+         * whenever the function is required to run.
+         *
+         */
         fun mainFunc() {
             val f1 = Functions() // create an instance of functions
 
@@ -65,6 +73,7 @@ class GamePage : AppCompatActivity() {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
+                    correctTimerScore++
                     mainFunc()
                 } else {
                     resultDisplay.text = "WRONG!"
@@ -79,6 +88,7 @@ class GamePage : AppCompatActivity() {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
+                    correctTimerScore++
                     mainFunc()
                 } else {
                     resultDisplay.text = "WRONG!"
@@ -93,6 +103,7 @@ class GamePage : AppCompatActivity() {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
+                    correctTimerScore++
                     mainFunc()
                 } else {
                     resultDisplay.text = "WRONG!"
@@ -109,7 +120,13 @@ class GamePage : AppCompatActivity() {
         mainFunc()
     }
 
-    private fun timerFunc(milliseconds: Long){
+
+    /**
+     *
+     * This function starts the timer.
+     *
+     */
+    fun timerFunc(milliseconds: Long){
         count_down_timer = object: CountDownTimer(milliseconds, 1000){
             override fun onTick(millisUntilFinished: Long) {
                 currentTime = millisUntilFinished
@@ -124,11 +141,19 @@ class GamePage : AppCompatActivity() {
         }.start()
     }
 
+    /**
+     *
+     * This inbuilt function saves data on orientation change.
+     *
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("LEFT_RESULT", formattedLeft)
         outState.putString("RIGHT_RESULT", formattedRight)
+        outState.putInt("CORRECT_RESULT", correctCount)
+        outState.putInt("WRONG_RESULT", wrongCount)
         outState.putLong("TIMER_RESULT",currentTime)
+        outState.putInt("TIMER_CORRECT", correctTimerScore)
      }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -139,6 +164,10 @@ class GamePage : AppCompatActivity() {
         rightExp.text = formattedRight
         currentTime = savedInstanceState.getLong("TIMER_RESULT", 0)
         timerFunc(currentTime)
+        correctCount = savedInstanceState.getInt("CORRECT_RESULT", 0)
+        wrongCount = savedInstanceState.getInt("WRONG_RESULT", 0)
+        correctTimerScore
+
     }
 
 }
