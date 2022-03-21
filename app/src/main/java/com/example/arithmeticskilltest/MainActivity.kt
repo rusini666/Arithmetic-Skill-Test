@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     private lateinit var popupWindow: PopupWindow
@@ -33,6 +34,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     *
+     * This function creates a popUpWindow.
+     * This code was taken from: https://github.com/nadavirinchi/PopUpWindow_AndroidStudio
+     *@author NadaVirinchi
+     */
     fun popUpWindow(){
         val layoutInflater =
             baseContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -45,6 +52,12 @@ class MainActivity : AppCompatActivity() {
         popupWindow.showAtLocation(constraintLayout, Gravity.CENTER, 0, 0)
         val btnclose = popupview.findViewById<Button>(R.id.btnclose)
         btnclose.setOnClickListener { popupWindow.dismiss() }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        moveTaskToBack(true)
+        exitProcess(-1)
     }
 
 }
