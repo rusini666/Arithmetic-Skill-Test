@@ -58,6 +58,7 @@ class GamePage : AppCompatActivity() {
          *
          */
         fun mainFunc() {
+
             val f1 = Functions() // create an instance of functions
 
             val left = f1.randomExpression()
@@ -126,7 +127,7 @@ class GamePage : AppCompatActivity() {
      * This function starts the timer.
      *
      */
-    fun timerFunc(milliseconds: Long){
+    private fun timerFunc(milliseconds: Long){
         count_down_timer = object: CountDownTimer(milliseconds, 1000){
             override fun onTick(millisUntilFinished: Long) {
                 currentTime = millisUntilFinished
@@ -134,6 +135,8 @@ class GamePage : AppCompatActivity() {
             }
 
             override fun onFinish() {
+                currentTime = 0
+                count_down_timer.cancel()
                 finish.putExtra("correct", correctCount.toString())
                 finish.putExtra("wrong", wrongCount.toString())
                 startActivity(finish)
@@ -163,11 +166,11 @@ class GamePage : AppCompatActivity() {
         formattedRight = savedInstanceState.getString("RIGHT_RESULT", "")
         rightExp.text = formattedRight
         currentTime = savedInstanceState.getLong("TIMER_RESULT", 0)
+        count_down_timer.cancel()
         timerFunc(currentTime)
         correctCount = savedInstanceState.getInt("CORRECT_RESULT", 0)
         wrongCount = savedInstanceState.getInt("WRONG_RESULT", 0)
-        correctTimerScore
-
+        correctTimerScore = savedInstanceState.getInt("TIMER_CORRECT", 0)
     }
 
 }

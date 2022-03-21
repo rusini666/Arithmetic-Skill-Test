@@ -16,7 +16,8 @@
         android:layout_marginBottom="208dp"
         android:text="@string/less_btn"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/greaterBtn"
@@ -27,17 +28,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/equalsBtn"
         app:layout_constraintHorizontal_bias="0.472"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/equalsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="36dp"
         android:layout_marginBottom="208dp"
         android:text="@string/equals_btn"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/lessBtn" />
+        app:layout_constraintEnd_toStartOf="@+id/lessBtn"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/rightExp"
