@@ -65,6 +65,33 @@ class Functions {
 
     /**
      *
+     * This function accepts the and formats the expression to have brackets.
+     *
+     */
+    fun getFormattedExpression(arithmeticExp: MutableList<String>): String{
+        if(arithmeticExp.size>3){
+            val formattedExpression = mutableListOf("(")
+            if(arithmeticExp.size>5){
+                formattedExpression.add("(")
+            }
+            for(i in 0 until arithmeticExp.size){
+                if(i<3){
+                    formattedExpression.add(arithmeticExp[i])
+                }else{
+                    if(i%2==1){
+                        formattedExpression.add(")")
+                    }
+                    formattedExpression.add(arithmeticExp[i])
+                }
+            }
+            return formattedExpression.joinToString(separator = "")
+        }else{
+            return arithmeticExp.joinToString(separator = "")
+        }
+    }
+
+    /**
+     *
      * This function accepts the String arithmetic expression,
      * evaluates the expression from left to right and returns the answers.
      *
@@ -95,33 +122,5 @@ class Functions {
             '/' -> finalAns /= Integer.parseInt(num)
         }
         return finalAns
-    }
-
-    /**
-     *
-     * This function accepts the and formats the expression to have brackets.
-     *
-     */
-    fun getFormattedExpression(arithmeticExp: MutableList<String>): String{
-
-        if(arithmeticExp.size>3){
-            val formattedExpression = mutableListOf("(")
-            if(arithmeticExp.size>5){
-                formattedExpression.add("(")
-            }
-            for(i in 0 until arithmeticExp.size){
-                if(i<3){
-                    formattedExpression.add(arithmeticExp[i])
-                }else{
-                    if(i%2==1){
-                        formattedExpression.add(")")
-                    }
-                    formattedExpression.add(arithmeticExp[i])
-                }
-            }
-            return formattedExpression.joinToString(separator = "")
-        }else{
-            return arithmeticExp.joinToString(separator = "")
-        }
     }
 }

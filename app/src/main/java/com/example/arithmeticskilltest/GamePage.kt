@@ -11,16 +11,22 @@ import androidx.core.content.ContextCompat
 class GamePage : AppCompatActivity() {
     var correctCount = 0
     var wrongCount = 0
-    var currentTime : Long = 0
-    private lateinit var count_down_timer : CountDownTimer
+    var currentTime : Long = 0 // current time in countdowntimer when running
+    private lateinit var count_down_timer : CountDownTimer // countdowntimer
     var formattedLeft = ""
     var formattedRight = ""
-    private lateinit var leftExp : TextView
+    private lateinit var leftExp : TextView // displays left expression
     private lateinit var rightExp : TextView
-    lateinit var timer : TextView
+    lateinit var timer : TextView // displays timer
     lateinit var finish : Intent
     var correctTimerScore = 0
-
+    private lateinit var left: ArrayList<String>
+    private lateinit var right: ArrayList<String>
+    private lateinit var leftStringExp : String
+    private lateinit var rightStringExp : String
+    var leftAnswer = 0
+    var rightAnswer = 0
+    private lateinit var resultDisplay : TextView // displays result
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +38,9 @@ class GamePage : AppCompatActivity() {
         val lessBtn = findViewById<Button>(R.id.lessBtn)
         leftExp = findViewById(R.id.leftExp)
         rightExp = findViewById(R.id.rightExp)
-        val resultDisplay = findViewById<TextView>(R.id.resultDisplay)
+        resultDisplay = findViewById(R.id.resultDisplay)
         finish = Intent(this, GameOver::class.java) // intent starting a new activity
-
+        val f1 = Functions() // create an instance of functions
 
         /**
          *
@@ -45,7 +51,10 @@ class GamePage : AppCompatActivity() {
             if (correctTimerScore % 5 == 0 && correctTimerScore != 0) {
                 correctTimerScore = 0
                 count_down_timer.cancel()
-                timerFunc(currentTime + 10000)
+                if(currentTime > 40000)
+                    timerFunc(50000)
+                else
+                    timerFunc(currentTime + 10000)
             }
         }
 
@@ -59,18 +68,33 @@ class GamePage : AppCompatActivity() {
          */
         fun mainFunc() {
 
-            val f1 = Functions() // create an instance of functions
+            left = f1.randomExpression()
+            right = f1.randomExpression()
 
-            val left = f1.randomExpression()
-            val right = f1.randomExpression()
+            leftStringExp = left.joinToString(separator = "")
+            rightStringExp = right.joinToString(separator = "")
 
-            val leftStringExp = left.joinToString(separator = "")
-            val rightStringExp = right.joinToString(separator = "")
+//            println("leftString: $leftStringExp")
+//            println("rightString: $rightStringExp")
 
             bonusTime()
 
+            formattedLeft = f1.getFormattedExpression(left)
+            formattedRight = f1.getFormattedExpression(right)
+
+            leftExp.text = formattedLeft
+            rightExp.text = formattedRight
+
+            leftAnswer = f1.answer(leftStringExp)
+            rightAnswer = f1.answer(rightStringExp)
+
+//            println("leftAnswer: $leftAnswer")
+//            println("rightAnswer: $rightAnswer")
+
+        }
+
             greaterBtn.setOnClickListener {
-                if (f1.answer(leftStringExp) > f1.answer(rightStringExp)) {
+                if (leftAnswer > rightAnswer) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
@@ -85,7 +109,7 @@ class GamePage : AppCompatActivity() {
             }
 
             equalsBtn.setOnClickListener {
-                if (f1.answer(leftStringExp) == f1.answer(rightStringExp)) {
+                if (leftAnswer == rightAnswer) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
@@ -100,24 +124,19 @@ class GamePage : AppCompatActivity() {
             }
 
             lessBtn.setOnClickListener {
-                if (f1.answer(leftStringExp) < f1.answer(rightStringExp)) {
+                if (leftAnswer < rightAnswer) {
                     resultDisplay.text = "CORRECT!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.green))
                     correctCount++
                     correctTimerScore++
                     mainFunc()
                 } else {
-                    resultDisplay.text = "WRONG!"
+                    resultDisplay.text= "WRONG!"
                     resultDisplay.setTextColor(ContextCompat.getColor(this, R.color.red))
                     wrongCount++
                     mainFunc()
                 }
             }
-            formattedLeft = f1.getFormattedExpression(left)
-            formattedRight = f1.getFormattedExpression(right)
-            leftExp.text = formattedLeft
-            rightExp.text = formattedRight
-        }
         mainFunc()
     }
 
@@ -128,6 +147,7 @@ class GamePage : AppCompatActivity() {
      *
      */
     private fun timerFunc(milliseconds: Long){
+
         count_down_timer = object: CountDownTimer(milliseconds, 1000){
             override fun onTick(millisUntilFinished: Long) {
                 currentTime = millisUntilFinished
@@ -135,13 +155,21 @@ class GamePage : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                currentTime = 0
-                count_down_timer.cancel()
-                finish.putExtra("correct", correctCount.toString())
-                finish.putExtra("wrong", wrongCount.toString())
-                startActivity(finish)
+                if(timer.text=="0")
+                    goToScore()
             }
         }.start()
+    }
+
+    /**
+     *
+     * This function passes score data to GameOver activity.
+     *
+     */
+    private fun goToScore() {
+        finish.putExtra("correct", correctCount.toString())
+        finish.putExtra("wrong", wrongCount.toString())
+        startActivity(finish)
     }
 
     /**
@@ -157,6 +185,13 @@ class GamePage : AppCompatActivity() {
         outState.putInt("WRONG_RESULT", wrongCount)
         outState.putLong("TIMER_RESULT",currentTime)
         outState.putInt("TIMER_CORRECT", correctTimerScore)
+        outState.putString("LEFT_STRING_EXP",leftStringExp)
+        outState.putString("RIGHT_STRING_EXP", rightStringExp)
+        outState.putStringArrayList("RIGHT", right)
+        outState.putStringArrayList("LEFT", left)
+        outState.putInt("LEFT_ANS",leftAnswer)
+        outState.putInt("RIGHT_ANS",rightAnswer)
+        count_down_timer.cancel()
      }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -165,12 +200,21 @@ class GamePage : AppCompatActivity() {
         leftExp.text = formattedLeft
         formattedRight = savedInstanceState.getString("RIGHT_RESULT", "")
         rightExp.text = formattedRight
+
         currentTime = savedInstanceState.getLong("TIMER_RESULT", 0)
         count_down_timer.cancel()
         timerFunc(currentTime)
+
         correctCount = savedInstanceState.getInt("CORRECT_RESULT", 0)
         wrongCount = savedInstanceState.getInt("WRONG_RESULT", 0)
+
         correctTimerScore = savedInstanceState.getInt("TIMER_CORRECT", 0)
+        left = savedInstanceState.getStringArrayList("LEFT") as ArrayList<String>
+        right = savedInstanceState.getStringArrayList("RIGHT") as ArrayList<String>
+        leftStringExp = savedInstanceState.getString("LEFT_STRING_EXP", "")
+        rightStringExp = savedInstanceState.getString("RIGHT_STRING_EXP","")
+        leftAnswer = savedInstanceState.getInt("LEFT_ANS",0)
+        rightAnswer = savedInstanceState.getInt("RIGHT_ANS",0)
     }
 
 }
