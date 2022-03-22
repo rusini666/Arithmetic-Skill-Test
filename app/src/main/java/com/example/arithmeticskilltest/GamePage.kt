@@ -74,8 +74,8 @@ class GamePage : AppCompatActivity() {
             leftStringExp = left.joinToString(separator = "")
             rightStringExp = right.joinToString(separator = "")
 
-            println("leftString: $leftStringExp")
-            println("rightString: $rightStringExp")
+//            println("leftString: $leftStringExp")
+//            println("rightString: $rightStringExp")
 
             bonusTime()
 
@@ -88,9 +88,9 @@ class GamePage : AppCompatActivity() {
             leftAnswer = f1.answer(leftStringExp)
             rightAnswer = f1.answer(rightStringExp)
 
-            println("leftAnswer: $leftAnswer")
-            println("rightAnswer: $rightAnswer")
-            println("----------------------------------------------------")
+//            println("leftAnswer: $leftAnswer")
+//            println("rightAnswer: $rightAnswer")
+//            println("----------------------------------------------------")
 
         }
 
@@ -218,6 +218,12 @@ class GamePage : AppCompatActivity() {
         rightAnswer = savedInstanceState.getInt("RIGHT_ANS",0)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        count_down_timer.cancel()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
 }
 
 

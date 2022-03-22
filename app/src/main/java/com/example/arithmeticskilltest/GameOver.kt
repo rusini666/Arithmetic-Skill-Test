@@ -6,10 +6,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class GameOver : AppCompatActivity() {
-//    private lateinit var correctScore : TextView
-//    private lateinit var wrongScore: TextView
-//    private lateinit var correctR : String
-//    private lateinit var wrongR: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
